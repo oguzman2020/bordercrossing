@@ -1,2 +1,426 @@
-
-hola
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="theme-color" content="#060b14"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<title>Border Crossing App</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#060b14;font-family:'Syne',sans-serif;color:#e2e8f0;min-height:100vh;}
+@keyframes ping{0%{transform:scale(1);opacity:0.8}100%{transform:scale(2.4);opacity:0}}
+@keyframes slideUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+::-webkit-scrollbar{width:0;}
+input::placeholder{color:#334155;}
+input,button,a{font-family:'Syne',sans-serif;}
+input{color:#e2e8f0;}
+.screen{display:none;flex-direction:column;min-height:100vh;animation:slideUp 0.25s ease;}
+.screen.active{display:flex;}
+.status-bar{height:44px;background:#020509;display:flex;align-items:center;justify-content:space-between;padding:0 20px;font-family:'JetBrains Mono',monospace;font-size:11px;color:#334155;position:sticky;top:0;z-index:100;}
+.ldot{width:8px;height:8px;border-radius:50%;display:inline-block;position:relative;flex-shrink:0;}
+.ldot::before{content:'';position:absolute;inset:0;border-radius:50%;background:inherit;opacity:0.35;animation:ping 1.8s ease-out infinite;}
+.btn-wa{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:10px;background:#128C7E;border:none;border-radius:9px;color:#fff;font-size:0.7rem;font-weight:700;cursor:pointer;text-decoration:none;}
+.btn-primary{width:100%;padding:12px;border:none;border-radius:10px;font-size:0.85rem;font-weight:800;cursor:pointer;color:#060b14;}
+.btn-secondary{flex:1;padding:9px 6px;background:#0a1628;border:1px solid #1e3a5f;border-radius:9px;color:#64748b;font-size:0.62rem;font-weight:600;cursor:pointer;}
+.btn-back{background:none;border:none;color:#38bdf8;font-size:0.72rem;cursor:pointer;margin-bottom:10px;padding:0;}
+.mode-card{background:#0a1628;border:1px solid #1e3a5f;border-radius:15px;padding:16px;margin-bottom:12px;cursor:pointer;display:flex;gap:13px;align-items:flex-start;}
+.port-card{width:100%;background:#0a0f1c;border:1px solid #1a2744;border-radius:13px;padding:10px 12px;margin-bottom:7px;cursor:pointer;text-align:left;display:flex;align-items:center;gap:10px;}
+.lane-card{width:100%;background:#0a0f1c;border:1.5px solid #1a2744;border-radius:12px;padding:10px 11px;margin-bottom:8px;cursor:pointer;text-align:left;position:relative;}
+.best-badge{position:absolute;top:-7px;left:10px;border-radius:4px;padding:1px 7px;font-size:0.46rem;font-weight:800;color:#060b14;white-space:nowrap;}
+.section-header{display:flex;align-items:center;gap:6px;margin-bottom:8px;margin-top:12px;}
+.section-line{flex:1;height:1px;background:#0f2744;}
+.tag{font-size:0.52rem;background:#0d1829;border:1px solid #1e3a5f;border-radius:5px;padding:2px 6px;color:#64748b;}
+.progress-bar{height:5px;background:#0d1829;border-radius:3px;overflow:hidden;margin-bottom:10px;}
+.progress-fill{height:100%;border-radius:3px;}
+.mono{font-family:'JetBrains Mono',monospace;}
+.info-pills{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:9px;}
+.pill{font-size:0.5rem;background:#0d1829;border:1px solid #1e3a5f;border-radius:5px;padding:2px 6px;color:#64748b;}
+</style>
+</head>
+<body>
+<div id="screen-mode" class="screen active">
+  <div class="status-bar">
+    <span id="time-mode" class="mono">09:41</span>
+    <div style="display:flex;gap:4px"><span>●●●●</span><span>WiFi</span><span>⚡</span></div>
+  </div>
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 20px;">
+    <div style="text-align:center;margin-bottom:32px;">
+      <div style="font-size:3rem;margin-bottom:10px;">🛂</div>
+      <div style="font-size:1.6rem;font-weight:800;">Border<span style="color:#38bdf8;">Crossing</span></div>
+      <div style="font-size:0.58rem;color:#334155;margin-top:5px;font-family:'JetBrains Mono',monospace;">TIEMPOS DE CRUCE · TIEMPO REAL</div>
+    </div>
+    <div style="font-size:0.65rem;color:#475569;text-align:center;margin-bottom:16px;">¿Cómo quieres usar la app?</div>
+    <div class="mode-card" onclick="selectMode('consult')">
+      <div style="width:44px;height:44px;border-radius:11px;background:#0d1f3c;border:1px solid #1e3a5f;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;">🔍</div>
+      <div style="flex:1;">
+        <div style="font-size:0.92rem;font-weight:800;margin-bottom:4px;">Solo consultar tiempos</div>
+        <div style="font-size:0.62rem;color:#475569;line-height:1.6;">Estoy lejos. Quiero saber cuánto voy a esperar antes de salir.</div>
+        <div style="display:flex;gap:5px;margin-top:8px;flex-wrap:wrap;">
+          <span class="tag">📍 Sin GPS</span>
+          <span class="tag">⚡ Instantáneo</span>
+          <div id="screen-mode" class="screen active">
+  <div class="status-bar">
+    <span id="time-mode" class="mono">09:41</span>
+    <div style="display:flex;gap:4px"><span>●●●●</span><span>WiFi</span><span>⚡</span></div>
+  </div>
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 20px;">
+    <div style="text-align:center;margin-bottom:32px;">
+      <div style="font-size:3rem;margin-bottom:10px;">🛂</div>
+      <div style="font-size:1.6rem;font-weight:800;">Border<span style="color:#38bdf8;">Crossing</span></div>
+      <div style="font-size:0.58rem;color:#334155;margin-top:5px;font-family:'JetBrains Mono',monospace;">TIEMPOS DE CRUCE · TIEMPO REAL</div>
+    </div>
+    <div style="font-size:0.65rem;color:#475569;text-align:center;margin-bottom:16px;">¿Cómo quieres usar la app?</div>
+    <div class="mode-card" onclick="selectMode('consult')">
+      <div style="width:44px;height:44px;border-radius:11px;background:#0d1f3c;border:1px solid #1e3a5f;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;">🔍</div>
+      <div style="flex:1;">
+        <div style="font-size:0.92rem;font-weight:800;margin-bottom:4px;">Solo consultar tiempos</div>
+        <div style="font-size:0.62rem;color:#475569;line-height:1.6;">Estoy lejos. Quiero saber cuánto voy a esperar antes de salir.</div>
+        <div style="display:flex;gap:5px;margin-top:8px;flex-wrap:wrap;">
+          <span class="tag">📍 Sin GPS</span>
+          <span class="tag">⚡ Instantáneo</span>
+          <span class="tag">🔒 Privado</span>
+        </div>
+      </div>
+    </div>
+    <div class="mode-card" style="background:linear-gradient(135deg,#071c38,#0a1628);border-color:#38bdf844;" onclick="selectMode('gps')">
+      <div style="width:44px;height:44px;border-radius:11px;background:#0d2744;border:1px solid #38bdf8;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;position:relative;">
+        📡
+        <div style="position:absolute;top:-3px;right:-3px;width:9px;height:9px;border-radius:50%;background:#22c55e;border:2px solid #060b14;"></div>
+      </div>
+      <div style="flex:1;">
+        <div style="font-size:0.92rem;font-weight:800;color:#38bdf8;margin-bottom:4px;">Cruzar con GPS en vivo</div>
+        <div style="font-size:0.62rem;color:#475569;line-height:1.6;">Ya estoy en la fila. Activa el GPS para medir mi avance en tiempo real.</div>
+        <div style="display:flex;gap:5px;margin-top:8px;flex-wrap:wrap;">
+          <span class="tag" style="border-color:#38bdf844;color:#38bdf8;">📡 GPS activo</span>
+          <span class="tag" style="border-color:#38bdf844;color:#38bdf8;">🗺️ Mapa</span>
+          <span class="tag" style="border-color:#38bdf844;color:#38bdf8;">⏱️ Tiempo real</span>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;font-size:0.54rem;color:#1e293b;margin-top:16px;">Puedes cambiar de modo en cualquier momento</div>
+  </div>
+</div>
+<div id="screen-ports" class="screen">
+  <div class="status-bar">
+    <span id="time-ports" class="mono">09:41</span>
+    <div style="display:flex;gap:4px"><span>●●●●</span><span>WiFi</span><span>⚡</span></div>
+  </div>
+  <div style="padding:14px 14px 10px;background:linear-gradient(180deg,#020509,#060b14);">
+    <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px;">
+      <div id="mode-badge" style="display:flex;align-items:center;gap:5px;background:#0a1628;border:1px solid #1e3a5f;border-radius:18px;padding:4px 10px;">
+        <span style="font-size:0.75rem;">🔍</span>
+        <span id="mode-badge-text" style="font-size:0.54rem;color:#64748b;font-family:'JetBrains Mono',monospace;">Modo consulta</span>
+      </div>
+    </div>
+    <div style="font-size:1.2rem;font-weight:800;margin-bottom:3px;">¿Por dónde<br/>vas a cruzar?</div>
+    <div id="port-subtitle" style="font-size:0.58rem;color:#475569;margin-bottom:12px;">Consulta tiempos sin activar tu GPS</div>
+    <div style="position:relative;margin-bottom:9px;">
+      <span style="position:absolute;left:9px;top:50%;transform:translateY(-50%);font-size:0.8rem;">🔍</span>
+      <input id="search-input" type="text" placeholder="Buscar puerto o ciudad…" oninput="filterPorts()" style="width:100%;padding:9px 9px 9px 30px;background:#0a1628;border:1px solid #1e3a5f;border-radius:9px;font-size:0.74rem;outline:none;"/>
+    </div>
+    <div style="display:flex;gap:6px;">
+      <button onclick="filterState('ALL')" id="btn-ALL" style="padding:4px 12px;background:#1e3a5f;border:1px solid #38bdf8;border-radius:16px;color:#38bdf8;font-size:0.58rem;font-weight:700;cursor:pointer;">Todos</button>
+      <button onclick="filterState('CA')" id="btn-CA" style="padding:4px 12px;background:transparent;border:1px solid #1e293b;border-radius:16px;color:#475569;font-size:0.58rem;cursor:pointer;">CA</button>
+      <button onclick="filterState('AZ')" id="btn-AZ" style="padding:4px 12px;background:transparent;border:1px solid #1e293b;border-radius:16px;color:#475569;font-size:0.58rem;cursor:pointer;">AZ</button>
+      <button onclick="filterState('TX')" id="btn-TX" style="padding:4px 12px;background:transparent;border:1px solid #1e293b;border-radius:16px;color:#475569;font-size:0.58rem;cursor:pointer;">TX</button>
+    </div>
+  </div>
+  <div id="port-list" style="flex:1;overflow-y:auto;padding:8px 13px 20px;"></div>
+</div>
+<div id="screen-consult" class="screen">
+  <div class="status-bar">
+    <span id="time-consult" class="mono">09:41</span>
+    <div style="display:flex;gap:4px"><span>●●●●</span><span>WiFi</span><span>⚡</span></div>
+  </div>
+  <div id="consult-header" style="background:linear-gradient(135deg,#020509,#0d1829);border-bottom:1px solid #0f2744;padding:12px 14px 11px;"></div>
+  <div id="consult-lanes" style="flex:1;overflow-y:auto;padding:10px 13px 20px;"></div>
+</div>
+<div id="screen-gps" class="screen">
+  <div class="status-bar">
+    <span id="time-gps" class="mono">09:41</span>
+    <div style="display:flex;gap:4px"><span>●●●●</span><span>WiFi</span><span>⚡</span></div>
+  </div>
+  <div id="gps-header" style="background:linear-gradient(135deg,#020509,#0d1829);border-bottom:1px solid #0f2744;padding:12px 14px 11px;"></div>
+  <div id="gps-lanes" style="flex:1;overflow-y:auto;padding:10px 13px 20px;"></div>
+</div>
+<div id="screen-tracking" class="screen">
+  <div class="status-bar">
+    <span id="time-tracking" class="mono">09:41</span>
+    <div style="display:flex;gap:4px"><span>●●●●</span><span>WiFi</span><span>⚡</span></div>
+  </div>
+  <div id="tracking-header" style="background:linear-gradient(135deg,#020509,#0d1829);border-bottom:1px solid #0f2744;padding:12px 14px 10px;"></div>
+  <div id="tracking-map" style="flex:1;position:relative;background:#060b14;overflow:hidden;min-height:300px;"></div>
+  <div id="tracking-footer" style="padding:10px 14px 24px;background:#060b14;"></div>
+</div>
+<script>
+function renderPorts(){
+const search=(document.getElementById("search-input")||{}).value||"";
+const list=document.getElementById("port-list");
+const stateLabels={CA:"California",AZ:"Arizona",TX:"Texas"};
+let html="";
+["CA","AZ","TX"].forEach(state=>{
+if(stateFilter!=="ALL"&&stateFilter!==state)return;
+const filtered=PORTS.filter(p=>p.state===state&&(p.name.toLowerCase().includes(search.toLowerCase())||p.city.toLowerCase().includes(search.toLowerCase())));
+if(!filtered.length)return;
+html+=`<div style="font-size:0.46rem;color:#334155;text-transform:uppercase;letter-spacing:0.12em;margin:8px 0 5px 2px;font-family:'JetBrains Mono',monospace;">— ${stateLabels[state]}</div>`;
+filtered.forEach(port=>{
+const mw=minWait(port);
+const bl=bestLane(port);
+const c=wc(mw);
+const laneIcons=port.lanes.map(l=>`<span style="font-size:0.6rem;background:#0d1829;border:1px solid #1e3a5f;border-radius:4px;padding:0 4px;">${l.icon}</span>`).join("");
+html+=`<button class="port-card" onclick="selectPort('${port.id}')">
+<div style="width:3px;height:42px;border-radius:2px;background:${c.dot};flex-shrink:0;"></div>
+<div style="flex:1;">
+<div style="font-size:0.82rem;font-weight:700;color:#e2e8f0;">${port.name}</div>
+<div style="font-size:0.56rem;color:#475569;margin-top:1px;">${port.city} · ${port.hours}</div>
+<div style="display:flex;gap:3px;margin-top:4px;flex-wrap:wrap;">${laneIcons}</div>
+</div>
+<div style="text-align:right;flex-shrink:0;">
+<div style="font-size:1.4rem;font-weight:800;color:${c.text};font-family:'JetBrains Mono',monospace;line-height:1;">${fmt(mw)}</div>
+<div style="font-size:0.5rem;color:#475569;">${bl.icon} ${bl.label}</div>
+<div style="font-size:0.44rem;color:#334155;">mas rapido</div>
+</div>
+<div style="color:#1e3a5f;font-size:0.7rem;">›</div>
+</button>`;
+});
+});
+list.innerHTML=html||`<div style="text-align:center;color:#334155;padding:30px;font-size:0.75rem;">No se encontraron puertos</div>`;
+}
+function selectPort(portId){
+currentPort=PORTS.find(p=>p.id===portId);
+expandedLane=null;
+if(currentMode==="consult"){renderConsult();showScreen("consult");}
+else{renderGPS();showScreen("gps");}
+}
+function renderConsult(){
+const port=currentPort;
+const bl=bestLane(port);
+const mw=minWait(port);
+const c=wc(mw);
+const waUrl=waLink(port,bl);
+document.getElementById("consult-header").innerHTML=`
+<button class="btn-back" onclick="showScreen('ports')">‹ Cambiar puerto</button>
+<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:9px;">
+<div>
+<span style="font-size:0.5rem;background:#0a1628;border:1px solid #1e3a5f;border-radius:7px;padding:2px 7px;color:#64748b;font-family:'JetBrains Mono',monospace;">🔍 Modo consulta</span>
+<div style="font-size:1.05rem;font-weight:800;margin-top:3px;">${port.name}</div>
+<div style="font-size:0.58rem;color:#475569;margin-top:2px;">📍 ${port.city} · ⏰ ${port.hours}</div>
+</div>
+<div style="display:flex;align-items:center;gap:4px;background:#0a1628;border-radius:11px;padding:4px 8px;border:1px solid #1a2744;">
+${ldot("#22c55e",7)}
+<span style="font-size:0.5rem;color:#94a3b8;font-family:'JetBrains Mono',monospace;">${port.users} GPS</span>
+</div>
+</div>
+<div style="background:linear-gradient(135deg,${c.bg},#0a1628);border:1px solid ${c.border};border-radius:11px;padding:10px 12px;">
+<div style="font-size:0.44rem;color:#475569;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:5px;">✦ Recomendacion ahora mismo</div>
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:9px;">
+<div>
+<div style="font-size:0.88rem;font-weight:800;color:${c.text};">${bl.icon} ${bl.label}</div>
+<div style="font-size:0.56rem;color:#475569;margin-top:2px;">${bl.desc}</div>
+</div>
+<div style="text-align:right;">
+<div style="font-size:1.8rem;font-weight:800;color:${c.text};font-family:'JetBrains Mono',monospace;line-height:1;">${fmt(bl.wait)}</div>
+<div style="font-size:0.48rem;color:#334155;">min espera</div>
+</div>
+</div>
+<a href="${waUrl}" target="_blank" class="btn-wa">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+Compartir por WhatsApp
+</a>
+</div>`;
+const tip=getTip();
+let lanesHtml=`<div style="margin:8px 0;background:#0a1628;border:1px solid #1e3a5f;border-radius:9px;padding:8px 11px;display:flex;align-items:flex-start;gap:7px;"><span style="font-size:0.85rem;flex-shrink:0;">🕐</span><span style="font-size:0.62rem;color:#64748b;line-height:1.5;">${tip}</span></div>`;
+[{label:"🚗 Vehiculos",type:"car"},{label:"🚶 Peatonal",type:"ped"},{label:"🚛 Comercial",type:"truck"}].forEach(g=>{
+const lanes=port.lanes.filter(l=>l.type===g.type);
+if(!lanes.length)return;
+lanesHtml+=`<div class="section-header"><span style="font-size:0.72rem;">${g.label.split(" ")[0]}</span><span style="font-size:0.5rem;color:#334155;text-transform:uppercase;letter-spacing:0.12em;font-family:'JetBrains Mono',monospace;">${g.label.split(" ").slice(1).join(" ")}</span><div class="section-line"></div></div>`;
+lanes.forEach(lane=>{
+const lc=wc(lane.wait);
+const isBest=lane.id===bl.id;
+const isExp=expandedLane===lane.id;
+const waLaneUrl=waLink(port,lane);
+lanesHtml+=`<div class="lane-card" style="background:${isExp?lc.bg:"#0a0f1c"};border-color:${isExp?lc.border:isBest?lc.border+"66":"#1a2744"};" onclick="toggleLane('${lane.id}')">
+${isBest?`<div class="best-badge" style="background:${lc.dot};">✦ MENOR ESPERA</div>`:""}
+<div style="display:flex;align-items:center;gap:8px;">
+<div style="width:34px;height:34px;border-radius:9px;background:${lc.bg};border:1px solid ${lc.border};display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;">${lane.icon}</div>
+<div style="flex:1;"><div style="font-size:0.78rem;font-weight:700;color:#e2e8f0;">${lane.label}</div><div style="font-size:0.56rem;color:#475569;margin-top:1px;">${lane.desc}</div></div>
+<div style="text-align:right;flex-shrink:0;">
+<div style="font-size:1.4rem;font-weight:800;color:${lc.text};font-family:'JetBrains Mono',monospace;line-height:1;">${fmt(lane.wait)}</div>
+<div style="font-size:0.46rem;color:#334155;">min</div>
+<div style="font-size:0.5rem;color:${lc.text};">${lc.label}</div>
+</div>
+<div style="font-size:0.6rem;color:#1e3a5f;margin-left:2px;">${isExp?"▲":"▼"}</div>
+</div>
+${isExp?`<div style="margin-top:10px;padding-top:10px;border-top:1px solid ${lc.border}44;">
+<div style="display:flex;justify-content:space-between;margin-bottom:4px;"><span style="font-size:0.56rem;color:#475569;">Congestion</span><span style="font-size:0.56rem;color:${lc.text};font-family:'JetBrains Mono',monospace;">${fmt(lane.wait)} min</span></div>
+<div class="progress-bar"><div class="progress-fill" style="width:${Math.min(lane.wait/99*100,100)}%;background:${lc.dot};"></div></div>
+<div class="info-pills"><span class="pill">📡 ${port.users} usuarios</span><span class="pill">🕐 hace 30s</span></div>
+<div style="display:flex;gap:7px;">
+<a href="${waLaneUrl}" target="_blank" class="btn-wa" style="flex:1;">
+<svg width="13" height="13" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+WhatsApp</a>
+<button class="btn-secondary" onclick="event.stopPropagation();alert('Te avisaremos cuando baje el tiempo en ${lane.label}')">🔔 Avisar</button>
+</div></div>`:""}
+</div>`;
+});
+});
+lanesHtml+=`<div style="background:#0a0f1c;border-radius:9px;padding:9px 11px;border:1px solid #1a2744;display:flex;justify-content:space-between;align-items:center;margin-top:12px;"><span style="font-size:0.58rem;color:#334155;">📡 Datos en vivo · GPS anonimo</span><span style="font-size:0.54rem;color:#334155;font-family:'JetBrains Mono',monospace;">hace 30s</span></div>`;
+document.getElementById("consult-lanes").innerHTML=lanesHtml;
+}
+function toggleLane(laneId){
+expandedLane=expandedLane===laneId?null:laneId;
+if(currentMode==="consult")renderConsult();
+else renderGPS();
+}
+function renderGPS(){
+const port=currentPort;
+const bl=bestLane(port);
+const mw=minWait(port);
+const c=wc(mw);
+document.getElementById("gps-header").innerHTML=`
+<button class="btn-back" onclick="showScreen('ports')">‹ Cambiar puerto</button>
+<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:9px;">
+<div>
+<span style="font-size:0.5rem;background:#071c38;border:1px solid #38bdf8;border-radius:7px;padding:2px 7px;color:#38bdf8;font-family:'JetBrains Mono',monospace;">📡 GPS en vivo</span>
+<div style="font-size:1.05rem;font-weight:800;margin-top:3px;">${port.name}</div>
+<div style="font-size:0.58rem;color:#475569;margin-top:2px;">📍 ${port.city} · ⏰ ${port.hours}</div>
+</div>
+<div style="display:flex;align-items:center;gap:4px;background:#0a1628;border-radius:11px;padding:4px 8px;border:1px solid #1a2744;">
+${ldot("#22c55e",7)}<span style="font-size:0.5rem;color:#94a3b8;font-family:'JetBrains Mono',monospace;">${port.users} GPS</span>
+</div>
+</div>
+<div style="background:linear-gradient(135deg,${c.bg},#0a1628);border:1px solid ${c.border};border-radius:10px;padding:8px 11px;display:flex;justify-content:space-between;align-items:center;">
+<div><div style="font-size:0.44rem;color:#475569;text-transform:uppercase;margin-bottom:2px;">✦ Carril mas rapido</div>
+<div style="font-size:0.8rem;font-weight:700;color:${c.text};">${bl.icon} ${bl.label}</div></div>
+<div><span style="font-size:1.6rem;font-weight:800;color:${c.text};font-family:'JetBrains Mono',monospace;">${fmt(mw)}</span><span style="font-size:0.5rem;color:#334155;"> min</span></div>
+</div>`;
+let html=`<div style="background:#071c38;border:1px solid #38bdf844;border-radius:10px;padding:8px 11px;margin-bottom:12px;display:flex;gap:8px;align-items:center;"><span style="font-size:0.85rem;">📍</span><span style="font-size:0.6rem;color:#64748b;line-height:1.5;">Selecciona el carril donde vas a formarte.</span></div>`;
+[{label:"🚗 Vehiculos",type:"car"},{label:"🚶 Peatonal",type:"ped"},{label:"🚛 Comercial",type:"truck"}].forEach(g=>{
+const lanes=port.lanes.filter(l=>l.type===g.type);
+if(!lanes.length)return;
+html+=`<div class="section-header"><span style="font-size:0.72rem;">${g.label.split(" ")[0]}</span><span style="font-size:0.5rem;color:#334155;text-transform:uppercase;letter-spacing:0.12em;font-family:'JetBrains Mono',monospace;">${g.label.split(" ").slice(1).join(" ")}</span><div class="section-line"></div></div>`;
+lanes.forEach(lane=>{
+const lc=wc(lane.wait);
+const isBest=lane.id===bl.id;
+const isExp=expandedLane===lane.id;
+html+=`<div class="lane-card" style="background:${isExp?lc.bg:"#0a0f1c"};border-color:${isExp?lc.border:isBest?lc.border+"66":"#1a2744"};" onclick="toggleLane('${lane.id}')">
+${isBest?`<div class="best-badge" style="background:${lc.dot};">✦ MENOR ESPERA</div>`:""}
+<div style="display:flex;align-items:center;gap:8px;">
+<div style="width:34px;height:34px;border-radius:9px;background:${lc.bg};border:1px solid ${lc.border};display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;">${lane.icon}</div>
+<div style="flex:1;"><div style="font-size:0.78rem;font-weight:700;color:#e2e8f0;">${lane.label}</div><div style="font-size:0.56rem;color:#475569;margin-top:1px;">${lane.desc}</div></div>
+<div style="text-align:right;flex-shrink:0;">
+<div style="font-size:1.4rem;font-weight:800;color:${lc.text};font-family:'JetBrains Mono',monospace;line-height:1;">${fmt(lane.wait)}</div>
+<div style="font-size:0.46rem;color:#334155;">min</div>
+</div>
+<div style="font-size:0.6rem;color:#1e3a5f;margin-left:2px;">${isExp?"▲":"▼"}</div>
+</div>
+${isExp?`<div style="margin-top:10px;padding-top:10px;border-top:1px solid ${lc.border}44;">
+<div class="progress-bar"><div class="progress-fill" style="width:${Math.min(lane.wait/99*100,100)}%;background:${lc.dot};"></div></div>
+<button onclick="event.stopPropagation();startTracking('${lane.id}')" class="btn-primary" style="background:${lc.dot};">🛂 Activar GPS · ${lane.label}</button>
+</div>`:""}
+</div>`;
+});
+});
+document.getElementById("gps-lanes").innerHTML=html;
+}
+function startTracking(laneId){
+currentLane=currentPort.lanes.find(l=>l.id===laneId);
+elapsed=0;
+renderTracking();
+showScreen("tracking");
+if(trackingTimer)clearInterval(trackingTimer);
+trackingTimer=setInterval(()=>{elapsed++;updateTrackingTime();},1000);
+if(navigator.geolocation){watchId=navigator.geolocation.watchPosition(pos=>{updateMovement(pos.coords.speed||4.2);},()=>{},{enableHighAccuracy:true,maximumAge:2000,timeout:10000});}
+}
+function renderTracking(){
+const port=currentPort;
+const lane=currentLane;
+const c=wc(lane.wait);
+document.getElementById("tracking-header").innerHTML=`
+<div style="display:flex;justify-content:space-between;align-items:flex-start;">
+<div>
+<div style="font-size:0.46rem;color:#334155;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:3px;">CRUZANDO AHORA</div>
+<div style="font-size:1rem;font-weight:800;">${port.name}</div>
+<div style="display:flex;align-items:center;gap:5px;margin-top:5px;">
+<div style="background:${c.bg};border:1px solid ${c.border};border-radius:6px;padding:2px 8px;font-size:0.58rem;font-weight:700;color:${c.text};">${lane.icon} ${lane.label}</div>
+${ldot("#f97316",7)}<span id="movement-label" style="font-size:0.58rem;color:#f97316;">Detectando...</span>
+</div>
+</div>
+<div style="text-align:right;">
+<div id="elapsed-time" style="font-size:1.7rem;font-weight:800;color:#38bdf8;font-family:'JetBrains Mono',monospace;line-height:1;">00:00</div>
+<div style="font-size:0.46rem;color:#334155;">tiempo en cruce</div>
+</div>
+</div>`;
+document.getElementById("tracking-map").innerHTML=`
+<svg width="100%" height="100%" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+<defs><radialGradient id="mg" cx="50%" cy="50%"><stop offset="0%" stop-color="#0d1829"/><stop offset="100%" stop-color="#020509"/></radialGradient></defs>
+<rect width="400" height="300" fill="url(#mg)"/>
+<path d="M0 155 L400 145" stroke="#1a2744" stroke-width="22" fill="none"/>
+<path d="M196 0 L204 300" stroke="#1a2744" stroke-width="14" fill="none"/>
+<path d="M0 155 L400 145" stroke="#0f2744" stroke-width="1.5" fill="none" stroke-dasharray="12,8"/>
+<path d="M152 240 C168 210 182 186 192 168 S200 150 200 150" stroke="#38bdf8" stroke-width="3" fill="none" stroke-dasharray="6,3" stroke-linecap="round" opacity="0.7"/>
+<circle cx="176" cy="156" r="4" fill="#60a5fa" opacity="0.5"/>
+<circle cx="212" cy="141" r="4" fill="#60a5fa" opacity="0.5"/>
+<circle cx="188" cy="135" r="3.5" fill="#60a5fa" opacity="0.4"/>
+<circle cx="228" cy="153" r="3.5" fill="#60a5fa" opacity="0.45"/>
+<circle cx="200" cy="90" r="12" fill="${c.dot}" opacity="0.15"/>
+<circle cx="200" cy="90" r="6" fill="${c.dot}" opacity="0.9"/>
+<text x="200" y="78" text-anchor="middle" fill="#475569" font-size="9" font-family="Georgia">Puerto</text>
+<circle cx="200" cy="150" r="22" fill="#38bdf822"/>
+<circle cx="200" cy="150" r="11" fill="#060b14" stroke="#38bdf8" stroke-width="2.5"/>
+<text x="200" y="150" text-anchor="middle" dominant-baseline="middle" font-size="12" id="user-icon">🚶</text>
+</svg>
+<div style="position:absolute;top:10px;left:0;right:0;display:flex;justify-content:center;">
+<div id="speed-pill" style="background:#060b14ee;border:1px solid #f9741644;border-radius:16px;padding:4px 12px;">
+<span id="speed-text" style="font-size:0.65rem;font-weight:700;color:#f97316;">📡 Detectando GPS...</span>
+</div>
+</div>
+<div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(0deg,#060b14ff 58%,transparent);padding:22px 16px 12px;">
+<div style="display:flex;justify-content:space-between;align-items:center;">
+<div>
+<div style="font-size:0.46rem;color:#334155;text-transform:uppercase;">Espera restante · ${lane.label}</div>
+<div id="remaining-time" style="font-size:1.9rem;font-weight:800;color:${c.text};font-family:'JetBrains Mono',monospace;line-height:1.1;">~${fmt(lane.wait)}<span style="font-size:0.75rem;color:#475569;"> min</span></div>
+</div>
+<div style="text-align:right;">
+<div style="font-size:0.46rem;color:#334155;">Señales GPS</div>
+<div style="font-size:1.15rem;font-weight:700;color:#38bdf8;font-family:'JetBrains Mono',monospace;">${port.users}</div>
+<div style="font-size:0.46rem;color:#334155;">en este cruce</div>
+</div>
+</div>
+</div>`;
+document.getElementById("tracking-footer").innerHTML=`
+<button onclick="stopTracking()" style="width:100%;padding:12px;background:#1a0505;border:1px solid #7f1d1d;border-radius:11px;color:#fca5a5;font-size:0.78rem;font-weight:700;cursor:pointer;">⏹ Terminar seguimiento</button>
+<div style="text-align:center;margin-top:6px;font-size:0.46rem;color:#1e293b;">Tu ubicacion exacta nunca se almacena</div>`;
+}
+function updateTrackingTime(){
+const el=document.getElementById("elapsed-time");
+const rem=document.getElementById("remaining-time");
+if(!el||!rem)return;
+el.textContent=String(Math.floor(elapsed/60)).padStart(2,"0")+":"+String(elapsed%60).padStart(2,"0");
+const c=wc(currentLane.wait);
+rem.innerHTML="~"+fmt(Math.max(1,currentLane.wait-Math.floor(elapsed/60)))+'<span style="font-size:0.75rem;color:#475569;"> min</span>';
+}
+function updateMovement(spd){
+const kmh=(spd*3.6).toFixed(1);
+const mv=spd<0.3?{icon:"⏸",label:"Detenido",color:"#ef4444"}:spd<2.5?{icon:"🚶",label:"Caminando",color:"#4ade80"}:spd<8?{icon:"🐢",label:"Trafico lento",color:"#fb923c"}:{icon:"🚗",label:"Avanzando",color:"#38bdf8"};
+const pill=document.getElementById("speed-pill");
+const label=document.getElementById("movement-label");
+const icon=document.getElementById("user-icon");
+const text=document.getElementById("speed-text");
+if(pill)pill.style.borderColor=mv.color+"44";
+if(label){label.textContent=mv.label;label.style.color=mv.color;}
+if(icon)icon.textContent=mv.icon;
+if(text){text.textContent=mv.icon+" "+mv.label+" · "+kmh+" km/h";text.style.color=mv.color;}
+}
+function stopTracking(){
+if(trackingTimer)clearInterval(trackingTimer);
+if(watchId&&navigator.geolocation)navigator.geolocation.clearWatch(watchId);
+elapsed=0;
+showScreen("ports");
+}
+renderPorts();
+</script>
+</body>
+</html>
