@@ -10,6 +10,7 @@
 *{box-sizing:border-box;margin:0;padding:0;}
 body{background:#060b14;font-family:'Syne',sans-serif;color:#e2e8f0;min-height:100vh;}
 @keyframes ping{0%{transform:scale(1);opacity:0.8}100%{transform:scale(2.4);opacity:0}}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
 ::-webkit-scrollbar{width:0;}
 input{color:#e2e8f0;font-family:'Syne',sans-serif;}
 button,a{font-family:'Syne',sans-serif;}
@@ -19,8 +20,7 @@ input::placeholder{color:#334155;}
 .sbar{height:44px;background:#020509;display:flex;align-items:center;justify-content:space-between;padding:0 20px;font-family:'JetBrains Mono',monospace;font-size:11px;color:#334155;position:sticky;top:0;z-index:100;}
 .ldot{width:8px;height:8px;border-radius:50%;display:inline-block;position:relative;flex-shrink:0;}
 .ldot::before{content:'';position:absolute;inset:0;border-radius:50%;background:inherit;opacity:0.35;animation:ping 1.8s ease-out infinite;}
-.mcard{background:#0a1628;border:1px solid #1e3a5f;border-radius:15px;padding:16px;margin-bottom:12px;cursor:pointer;display:flex;gap:13px;align-items:flex-start;transition:opacity 0.2s;}
-.mcard:hover{opacity:0.85;}
+.mcard{background:#0a1628;border:1px solid #1e3a5f;border-radius:15px;padding:16px;margin-bottom:12px;cursor:pointer;display:flex;gap:13px;align-items:flex-start;}
 .pcard{width:100%;background:#0a0f1c;border:1px solid #1a2744;border-radius:13px;padding:10px 12px;margin-bottom:7px;cursor:pointer;text-align:left;display:flex;align-items:center;gap:10px;}
 .lcard{width:100%;background:#0a0f1c;border:1.5px solid #1a2744;border-radius:12px;padding:10px 11px;margin-bottom:8px;cursor:pointer;text-align:left;position:relative;}
 .bbadge{position:absolute;top:-7px;left:10px;border-radius:4px;padding:1px 7px;font-size:0.46rem;font-weight:800;color:#060b14;white-space:nowrap;}
@@ -35,6 +35,7 @@ input::placeholder{color:#334155;}
 .back{background:none;border:none;color:#38bdf8;font-size:0.72rem;cursor:pointer;margin-bottom:10px;padding:0;display:block;}
 .pri{width:100%;padding:12px;border:none;border-radius:10px;font-size:0.85rem;font-weight:800;cursor:pointer;color:#060b14;}
 .sec{flex:1;padding:9px 6px;background:#0a1628;border:1px solid #1e3a5f;border-radius:9px;color:#64748b;font-size:0.62rem;font-weight:600;cursor:pointer;}
+.spinner{width:20px;height:20px;border:2px solid #1e3a5f;border-top-color:#38bdf8;border-radius:50%;animation:spin 0.8s linear infinite;display:inline-block;}
 </style>
 </head>
 <body>
@@ -47,7 +48,8 @@ input::placeholder{color:#334155;}
 <div style="font-size:1.6rem;font-weight:800;">Border<span style="color:#38bdf8;">Crossing</span></div>
 <div style="font-size:0.58rem;color:#334155;margin-top:5px;" class="mono">TIEMPOS DE CRUCE · TIEMPO REAL</div>
 </div>
-<div style="font-size:0.65rem;color:#475569;text-align:center;margin-bottom:16px;">¿Cómo quieres usar la app?</div>
+<div style="font-size:0.65rem;color:#475569;text-align:center;margin-bottom:8px;">¿Cómo quieres usar la app?</div>
+<div style="font-size:0.6rem;color:#334155;text-align:center;margin-bottom:16px;">Entre más personas comparten su tiempo de cruce, más precisa es la información para todos</div>
 <div class="mcard" id="btn-consult">
 <div style="width:44px;height:44px;border-radius:11px;background:#0d1f3c;border:1px solid #1e3a5f;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;">🔍</div>
 <div style="flex:1;">
@@ -61,10 +63,12 @@ input::placeholder{color:#334155;}
 <div class="mcard" id="btn-gps" style="background:linear-gradient(135deg,#071c38,#0a1628);border-color:#38bdf844;">
 <div style="width:44px;height:44px;border-radius:11px;background:#0d2744;border:1px solid #38bdf8;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;position:relative;">📡<div style="position:absolute;top:-3px;right:-3px;width:9px;height:9px;border-radius:50%;background:#22c55e;border:2px solid #060b14;"></div></div>
 <div style="flex:1;">
-<div style="font-size:0.92rem;font-weight:800;color:#38bdf8;margin-bottom:4px;">Cruzar con GPS en vivo</div>
-<div style="font-size:0.62rem;color:#475569;line-height:1.6;">Ya estoy en la fila. Activa el GPS para medir mi avance.</div>
+<div style="font-size:0.92rem;font-weight:800;color:#38bdf8;margin-bottom:4px;">Cruzar y compartir mi tiempo</div>
+<div style="font-size:0.62rem;color:#475569;line-height:1.6;">Estoy en la fila. Comparto mi tiempo para ayudar a todos.</div>
 <div style="display:flex;gap:5px;margin-top:8px;flex-wrap:wrap;">
-<span class="tag" style="border-color:#38bdf844;color:#38bdf8;">📡 GPS</span><span class="tag" style="border-color:#38bdf844;color:#38bdf8;">🗺️ Mapa</span><span class="tag" style="border-color:#38bdf844;color:#38bdf8;">⏱️ Tiempo real</span>
+<span class="tag" style="border-color:#38bdf844;color:#38bdf8;">📡 GPS</span>
+<span class="tag" style="border-color:#38bdf844;color:#38bdf8;">🤝 Comunidad</span>
+<span class="tag" style="border-color:#38bdf844;color:#38bdf8;">⏱️ Tiempo real</span>
 </div>
 </div>
 </div>
@@ -78,6 +82,10 @@ input::placeholder{color:#334155;}
 <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px;">
 <div id="mbadge" style="display:flex;align-items:center;gap:5px;background:#0a1628;border:1px solid #1e3a5f;border-radius:18px;padding:4px 10px;">
 <span>🔍</span><span id="mbtext" style="font-size:0.54rem;color:#64748b;" class="mono">Modo consulta</span>
+</div>
+<div id="live-badge" style="display:flex;align-items:center;gap:4px;background:#052e16;border:1px solid #16a34a;border-radius:18px;padding:4px 10px;margin-left:auto;">
+<span class="ldot" style="background:#22c55e;width:6px;height:6px;"></span>
+<span id="live-count" style="font-size:0.52rem;color:#4ade80;" class="mono">0 usuarios activos</span>
 </div>
 </div>
 <div style="font-size:1.2rem;font-weight:800;margin-bottom:3px;">¿Por dónde<br/>vas a cruzar?</div>
@@ -110,76 +118,179 @@ input::placeholder{color:#334155;}
 </div>
 
 <script>
+var SURL="https://uzaoiddblgfihbwzopcl.supabase.co";
+var SKEY="sb_publishable_WKMuqphQTUA-dzWiT7SJhg_5Sk5RdJS";
+
 var PORTS=[
-{id:"san_ysidro",name:"San Ysidro",city:"Tijuana",state:"CA",hours:"24/7",users:142,lanes:[
-{id:"s1",icon:"🚗",label:"General",type:"car",wait:72,desc:"Carril regular todos los vehiculos"},
-{id:"s2",icon:"📡",label:"Ready Lane",type:"car",wait:38,desc:"Requiere tarjeta RFID"},
-{id:"s3",icon:"⚡",label:"SENTRI",type:"car",wait:12,desc:"Pre-aprobados CBP acceso expres"},
-{id:"s4",icon:"🚶",label:"Peatonal",type:"ped",wait:45,desc:"PedWest PedEast entrada a pie"},
-{id:"s5",icon:"⚡",label:"Ped SENTRI",type:"ped",wait:8,desc:"Peatonal expres miembros SENTRI"}]},
-{id:"otay_mesa",name:"Otay Mesa",city:"Tijuana",state:"CA",hours:"24/7",users:74,lanes:[
-{id:"o1",icon:"🚗",label:"General",type:"car",wait:31,desc:"Carril regular"},
-{id:"o2",icon:"📡",label:"Ready Lane",type:"car",wait:18,desc:"Requiere tarjeta RFID"},
-{id:"o3",icon:"⚡",label:"SENTRI",type:"car",wait:9,desc:"Pre-aprobados CBP"},
-{id:"o4",icon:"🚛",label:"Comercial",type:"truck",wait:24,desc:"Camiones y carga"},
-{id:"o5",icon:"🏎️",label:"FAST",type:"truck",wait:11,desc:"Free and Secure Trade"}]},
-{id:"tecate",name:"Tecate",city:"Tecate",state:"CA",hours:"6am-10pm",users:21,lanes:[
-{id:"t1",icon:"🚗",label:"General",type:"car",wait:14,desc:"Carril regular"},
-{id:"t2",icon:"🚶",label:"Peatonal",type:"ped",wait:7,desc:"Entrada a pie"}]},
-{id:"calexico",name:"Calexico Oeste",city:"Mexicali",state:"CA",hours:"24/7",users:98,lanes:[
-{id:"c1",icon:"🚗",label:"General",type:"car",wait:48,desc:"Carril regular"},
-{id:"c2",icon:"📡",label:"Ready Lane",type:"car",wait:27,desc:"Requiere tarjeta RFID"},
-{id:"c3",icon:"⚡",label:"SENTRI",type:"car",wait:11,desc:"Pre-aprobados CBP"},
-{id:"c4",icon:"🚶",label:"Peatonal",type:"ped",wait:35,desc:"Entrada a pie"}]},
-{id:"nogales",name:"Nogales DeConcini",city:"Nogales",state:"AZ",hours:"24/7",users:167,lanes:[
-{id:"n1",icon:"🚗",label:"General",type:"car",wait:85,desc:"Carril regular"},
-{id:"n2",icon:"📡",label:"Ready Lane",type:"car",wait:41,desc:"Requiere tarjeta RFID"},
-{id:"n3",icon:"⚡",label:"SENTRI",type:"car",wait:15,desc:"Pre-aprobados CBP"},
-{id:"n4",icon:"🚶",label:"Peatonal",type:"ped",wait:55,desc:"Entrada a pie"},
-{id:"n5",icon:"⚡",label:"Ped SENTRI",type:"ped",wait:12,desc:"Peatonal expres SENTRI"}]},
-{id:"elpaso",name:"Bridge of Americas",city:"Juarez",state:"TX",hours:"24/7",users:119,lanes:[
-{id:"e1",icon:"🚗",label:"General",type:"car",wait:57,desc:"Carril regular"},
-{id:"e2",icon:"📡",label:"Ready Lane",type:"car",wait:29,desc:"Requiere tarjeta RFID"},
-{id:"e3",icon:"⚡",label:"SENTRI",type:"car",wait:10,desc:"Pre-aprobados CBP"},
-{id:"e4",icon:"🚶",label:"Peatonal",type:"ped",wait:38,desc:"Entrada a pie"}]},
-{id:"laredo",name:"Laredo I-35",city:"Nuevo Laredo",state:"TX",hours:"24/7",users:88,lanes:[
-{id:"l1",icon:"🚗",label:"General",type:"car",wait:41,desc:"Carril regular"},
-{id:"l2",icon:"📡",label:"Ready Lane",type:"car",wait:22,desc:"Requiere tarjeta RFID"},
-{id:"l3",icon:"⚡",label:"SENTRI",type:"car",wait:8,desc:"Pre-aprobados CBP"},
-{id:"l4",icon:"🚛",label:"Comercial",type:"truck",wait:33,desc:"Camiones y carga"},
-{id:"l5",icon:"🏎️",label:"FAST",type:"truck",wait:14,desc:"Free and Secure Trade"}]},
-{id:"mcallen",name:"McAllen Hidalgo",city:"Reynosa",state:"TX",hours:"24/7",users:153,lanes:[
-{id:"m1",icon:"🚗",label:"General",type:"car",wait:74,desc:"Carril regular"},
-{id:"m2",icon:"📡",label:"Ready Lane",type:"car",wait:36,desc:"Requiere tarjeta RFID"},
-{id:"m3",icon:"⚡",label:"SENTRI",type:"car",wait:13,desc:"Pre-aprobados CBP"},
-{id:"m4",icon:"🚶",label:"Peatonal",type:"ped",wait:48,desc:"Entrada a pie"},
-{id:"m5",icon:"⚡",label:"Ped SENTRI",type:"ped",wait:10,desc:"Peatonal expres SENTRI"}]}
+{id:"san_ysidro",name:"San Ysidro",city:"Tijuana",state:"CA",hours:"24/7",users:0,lanes:[
+{id:"sy_general",icon:"🚗",label:"General",type:"car",wait:0,desc:"Carril regular todos los vehiculos"},
+{id:"sy_ready",icon:"📡",label:"Ready Lane",type:"car",wait:0,desc:"Requiere tarjeta RFID"},
+{id:"sy_sentri",icon:"⚡",label:"SENTRI",type:"car",wait:0,desc:"Pre-aprobados CBP acceso expres"},
+{id:"sy_pedwest",icon:"🚶",label:"PedWest",type:"ped",wait:0,desc:"Abierto 6am-2pm · ultimo acceso 1:45pm"},
+{id:"sy_pedeast",icon:"🚶",label:"PedEast",type:"ped",wait:0,desc:"Abierto 24 horas todos los dias"},
+{id:"sy_pedsentri",icon:"⚡",label:"Ped SENTRI",type:"ped",wait:0,desc:"Peatonal expres miembros SENTRI"}]},
+{id:"otay_mesa",name:"Otay Mesa",city:"Tijuana",state:"CA",hours:"24/7",users:0,lanes:[
+{id:"ot_general",icon:"🚗",label:"General",type:"car",wait:0,desc:"Carril regular todos los vehiculos"},
+{id:"ot_ready",icon:"📡",label:"Ready Lane",type:"car",wait:0,desc:"Requiere tarjeta RFID"},
+{id:"ot_sentri",icon:"⚡",label:"SENTRI",type:"car",wait:0,desc:"Pre-aprobados CBP"},
+{id:"ot_peatonal",icon:"🚶",label:"Peatonal",type:"ped",wait:0,desc:"Entrada a pie"},
+{id:"ot_pedsentri",icon:"⚡",label:"Ped SENTRI",type:"ped",wait:0,desc:"Peatonal expres SENTRI"},
+{id:"ot_comercial",icon:"🚛",label:"Comercial",type:"truck",wait:0,desc:"Camiones y carga"},
+{id:"ot_fast",icon:"🏎️",label:"FAST",type:"truck",wait:0,desc:"Free and Secure Trade"}]},
+{id:"tecate",name:"Tecate",city:"Tecate",state:"CA",hours:"6am-10pm",users:0,lanes:[
+{id:"tc_general",icon:"🚗",label:"General",type:"car",wait:0,desc:"Carril regular"},
+{id:"tc_peatonal",icon:"🚶",label:"Peatonal",type:"ped",wait:0,desc:"Entrada a pie"}]},
+{id:"calexico_w",name:"Calexico Oeste",city:"Mexicali",state:"CA",hours:"24/7",users:0,lanes:[
+{id:"cw_general",icon:"🚗",label:"General",type:"car",wait:0,desc:"Carril regular"},
+{id:"cw_ready",icon:"📡",label:"Ready Lane",type:"car",wait:0,desc:"Requiere tarjeta RFID"},
+{id:"cw_sentri",icon:"⚡",label:"SENTRI",type:"car",wait:0,desc:"Pre-aprobados CBP"},
+{id:"cw_peatonal",icon:"🚶",label:"Peatonal",type:"ped",wait:0,desc:"Entrada a pie"}]},
+{id:"algodones",name:"Los Algodones",city:"Algodones",state:"CA",hours:"6am-10pm",users:0,lanes:[
+{id:"al_general",icon:"🚗",label:"General",type:"car",wait:0,desc:"Carril regular"},
+{id:"al_peatonal",icon:"🚶",label:"Peatonal",type:"ped",wait:0,desc:"Entrada a pie"}]},
+{id:"nogales_dec",name:"Nogales DeConcini",city:"Nogales",state:"AZ",hours:"24/7",users:0,lanes:[
+{id:"nd_general",icon:"🚗",label:"General",type:"car",wait:0,desc:"Carril regular"},
+{id:"nd_ready",icon:"📡",label:"Ready Lane",type:"car",wait:0,desc:"Requiere tarjeta RFID"},
+{id:"nd_sentri",icon:"⚡",label:"SENTRI",type:"car",wait:0,desc:"Pre-aprobados CBP"},
+{id:"nd_peatonal",icon:"🚶",label:"Peatonal",type:"ped",wait:0,desc:"Entrada a pie"},
+{id:"nd_pedsentri",icon:"⚡",label:"Ped SENTRI",type:"ped",wait:0,desc:"Peatonal expres SENTRI"}]},
+{id:"nogales_mar",name:"Nogales Mariposa",city:"Nogales",state:"AZ",hours:"24/7",users:0,lanes:[
+{id:"nm_general",icon:"🚗",label:"General",type:"car",wait:0,desc:"Carril regular"},
+{id:"nm_sentri",icon:"⚡",label:"SENTRI",type:"car",wait:0,desc:"Pre-aprobados CBP"},
+{id:"nm_comercial",icon:"🚛",label:"Comercial",type:"truck",wait:0,desc:"Camiones y carga"},
+{id:"nm_fast",icon:"🏎️",label:"FAST",type:"truck",wait:0,desc:"Free and Secure Trade"}]},
+{id:"douglas",name:"Douglas",city:"Agua Prieta",state:"AZ",hours:"24/7",users:0,lanes:[
+{id:"dg_general",icon:"🚗",label:"General",type:"car",wait:0,desc:"Carril regular"},
+{id:"dg_peatonal",icon:"🚶",label:"Peatonal",type:"ped",wait:0,desc:"Entrada a pie"}]},
+{id:"elpaso_bpa",name:"Bridge of Americas",city:"Juarez",state:"TX",hours:"24/7",users:0,lanes:[
+{id:"ep_general",icon:"🚗",label:"General",type:"car",wait:0,desc:"Carril regular"},
+{id:"ep_ready",icon:"📡",label:"Ready Lane",type:"car",wait:0,desc:"Requiere tarjeta RFID"},
+{id:"ep_sentri",icon:"⚡",label:"SENTRI",type:"car",wait:0,desc:"Pre-aprobados CBP"},
+{id:"ep_peatonal",icon:"🚶",label:"Peatonal",type:"ped",wait:0,desc:"Entrada a pie"}]},
+{id:"laredo_i35",name:"Laredo I-35",city:"Nuevo Laredo",state:"TX",hours:"24/7",users:0,lanes:[
+{id:"lr_general",icon:"🚗",label:"General",type:"car",wait:0,desc:"Carril regular"},
+{id:"lr_ready",icon:"📡",label:"Ready Lane",type:"car",wait:0,desc:"Requiere tarjeta RFID"},
+{id:"lr_sentri",icon:"⚡",label:"SENTRI",type:"car",wait:0,desc:"Pre-aprobados CBP"},
+{id:"lr_comercial",icon:"🚛",label:"Comercial",type:"truck",wait:0,desc:"Camiones y carga"},
+{id:"lr_fast",icon:"🏎️",label:"FAST",type:"truck",wait:0,desc:"Free and Secure Trade"}]},
+{id:"mcallen",name:"McAllen Hidalgo",city:"Reynosa",state:"TX",hours:"24/7",users:0,lanes:[
+{id:"mc_general",icon:"🚗",label:"General",type:"car",wait:0,desc:"Carril regular"},
+{id:"mc_ready",icon:"📡",label:"Ready Lane",type:"car",wait:0,desc:"Requiere tarjeta RFID"},
+{id:"mc_sentri",icon:"⚡",label:"SENTRI",type:"car",wait:0,desc:"Pre-aprobados CBP"},
+{id:"mc_peatonal",icon:"🚶",label:"Peatonal",type:"ped",wait:0,desc:"Entrada a pie"},
+{id:"mc_pedsentri",icon:"⚡",label:"Ped SENTRI",type:"ped",wait:0,desc:"Peatonal expres SENTRI"}]}
 ];
 
-var mode="consult",port=null,lane=null,exp=null,sf="ALL",elapsed=0,timer=null,wid=null;
+var mode="consult",port=null,lane=null,exp=null,sf="ALL";
+var elapsed=0,timer=null,wid=null,startTime=null;
+var tiemposReales={};
 
-function fmt(n){return String(Math.min(99,Math.round(n))).padStart(2,"0");}
+function fmt(n){
+if(!n||n===0)return"--";
+return String(Math.min(99,Math.round(n))).padStart(2,"0");
+}
 function wc(m){
+if(!m||m===0)return{bg:"#0f172a",br:"#1e293b",tx:"#475569",dt:"#334155",lb:"Sin datos"};
 if(m<20)return{bg:"#052e16",br:"#16a34a",tx:"#4ade80",dt:"#22c55e",lb:"Fluido"};
 if(m<40)return{bg:"#1a2e05",br:"#65a30d",tx:"#a3e635",dt:"#84cc16",lb:"Leve"};
 if(m<60)return{bg:"#2d1b00",br:"#d97706",tx:"#fbbf24",dt:"#f59e0b",lb:"Moderado"};
 if(m<90)return{bg:"#2d0f00",br:"#ea580c",tx:"#fb923c",dt:"#f97316",lb:"Alto"};
 return{bg:"#2d0000",br:"#dc2626",tx:"#f87171",dt:"#ef4444",lb:"Critico"};
 }
-function mw(p){return Math.min.apply(null,p.lanes.map(function(l){return l.wait;}));}
-function bl(p){return p.lanes.reduce(function(a,b){return a.wait<b.wait?a:b;});}
-function dot(c,s){return '<span class="ldot" style="background:'+c+';width:'+(s||8)+'px;height:'+(s||8)+'px;"></span>';}
+function mw(p){
+var vals=p.lanes.map(function(l){return tiemposReales[l.id]||0;}).filter(function(v){return v>0;});
+if(!vals.length)return 0;
+return Math.min.apply(null,vals);
+}
+function getLaneWait(laneId){return tiemposReales[laneId]||0;}
+function dot(c,s){return'<span class="ldot" style="background:'+c+';width:'+(s||8)+'px;height:'+(s||8)+'px;"></span>';}
 function wa(p,l){
-var msg="🛂 *Border Crossing App*\n\n📍 Puerto: *"+p.name+"* ("+p.city+")\n🚦 Carril: *"+l.label+"*\n⏱ Espera: *"+fmt(l.wait)+" minutos*\n📊 "+wc(l.wait).lb+"\n\n📡 "+p.users+" usuarios GPS activos.";
+var t=getLaneWait(l.id);
+var msg="🛂 *Border Crossing App*\n\n📍 Puerto: *"+p.name+"* ("+p.city+")\n🚦 Carril: *"+l.label+"*\n⏱ Espera: *"+(t>0?fmt(t)+" minutos":"Sin datos aun")+"*\n\n📡 Datos de usuarios reales cruzando ahora.\nbordercrossing.netlify.app";
 return"https://wa.me/?text="+encodeURIComponent(msg);
 }
-function tip(){
-var h=new Date().getHours();
-if(h>=15&&h<=18)return"⚠️ Hora pico - considera salir antes de las 2 PM";
-if(h>=7&&h<=9)return"⚠️ Rush matutino - espera a las 10 AM si puedes";
-if(h>=22||h<=5)return"✅ Madrugada - menor afluencia del dia";
-return"ℹ️ Flujo normal. Buen momento para cruzar.";
+
+// ── Supabase ──────────────────────────────────────────────────────────────────
+async function guardarCruce(puertoId,carrilId,tiempoMin,velocidad){
+try{
+await fetch(SURL+"/rest/v1/cruces",{
+method:"POST",
+headers:{
+"Content-Type":"application/json",
+"apikey":SKEY,
+"Authorization":"Bearer "+SKEY
+},
+body:JSON.stringify({
+puerto_id:puertoId,
+carril_id:carrilId,
+carril_tipo:carrilId.split("_")[1]||"unknown",
+velocidad_ms:velocidad||0,
+movimiento:velocidad<0.3?"stopped":velocidad<2.5?"pedestrian":velocidad<8?"slow":"vehicle",
+tiempo_min:tiempoMin,
+hora:new Date().getHours(),
+dia_semana:new Date().getDay(),
+es_fin_semana:new Date().getDay()===0||new Date().getDay()===6
+})
+});
+await actualizarPromedio(puertoId,carrilId,tiempoMin);
+}catch(e){console.log("Error guardando:",e);}
 }
+
+async function actualizarPromedio(puertoId,carrilId,tiempoMin){
+try{
+var res=await fetch(SURL+"/rest/v1/tiempos_promedio?puerto_id=eq."+puertoId+"&carril_id=eq."+carrilId,{
+headers:{"apikey":SKEY,"Authorization":"Bearer "+SKEY}
+});
+var data=await res.json();
+var numUsuarios=1,promedio=tiempoMin;
+if(data&&data.length>0){
+numUsuarios=data[0].num_usuarios+1;
+promedio=Math.round((data[0].tiempo_min*data[0].num_usuarios+tiempoMin)/numUsuarios);
+}
+await fetch(SURL+"/rest/v1/tiempos_promedio",{
+method:"POST",
+headers:{
+"Content-Type":"application/json",
+"apikey":SKEY,
+"Authorization":"Bearer "+SKEY,
+"Prefer":"resolution=merge-duplicates"
+},
+body:JSON.stringify({
+puerto_id:puertoId,
+carril_id:carrilId,
+tiempo_min:promedio,
+num_usuarios:numUsuarios,
+hora:new Date().getHours(),
+es_fin_semana:new Date().getDay()===0||new Date().getDay()===6,
+updated_at:new Date().toISOString()
+})
+});
+tiemposReales[carrilId]=promedio;
+}catch(e){console.log("Error actualizando promedio:",e);}
+}
+
+async function cargarTiempos(){
+try{
+var res=await fetch(SURL+"/rest/v1/tiempos_promedio?select=*",{
+headers:{"apikey":SKEY,"Authorization":"Bearer "+SKEY}
+});
+var data=await res.json();
+var total=0;
+if(data&&data.length){
+data.forEach(function(d){
+tiemposReales[d.carril_id]=d.tiempo_min;
+total+=d.num_usuarios;
+});
+}
+var el=document.getElementById("live-count");
+if(el)el.textContent=total+" usuarios activos";
+}catch(e){console.log("Error cargando tiempos:",e);}
+}
+
+// Cargar tiempos al inicio y cada 30 segundos
+cargarTiempos();
+setInterval(cargarTiempos,30000);
+
 function clock(){
 var t=new Date().toLocaleTimeString("es-MX",{hour:"2-digit",minute:"2-digit"});
 ["t0","t1","t2","t3"].forEach(function(id){var el=document.getElementById(id);if(el)el.textContent=t;});
@@ -189,24 +300,22 @@ setInterval(clock,1000);clock();
 function show(id){
 document.querySelectorAll(".screen").forEach(function(s){s.classList.remove("active");});
 var s=document.getElementById(id);
-if(s){s.classList.add("active");}
+if(s)s.classList.add("active");
 window.scrollTo(0,0);
 }
 
 document.getElementById("btn-consult").addEventListener("click",function(){
 mode="consult";
 document.getElementById("mbtext").textContent="Modo consulta";
-document.getElementById("psub").textContent="Consulta tiempos sin activar tu GPS";
-renderPorts();
-show("s-ports");
+document.getElementById("psub").textContent="Consulta tiempos en tiempo real";
+renderPorts();show("s-ports");
 });
 
 document.getElementById("btn-gps").addEventListener("click",function(){
 mode="gps";
-document.getElementById("mbtext").textContent="GPS en vivo";
-document.getElementById("psub").textContent="Selecciona el puerto donde ya estas";
-renderPorts();
-show("s-ports");
+document.getElementById("mbtext").textContent="Compartiendo tiempo";
+document.getElementById("psub").textContent="Selecciona el puerto donde estas cruzando";
+renderPorts();show("s-ports");
 });
 
 document.getElementById("srch").addEventListener("input",renderPorts);
@@ -236,19 +345,20 @@ return p.state===state&&(p.name.toLowerCase().indexOf(srch.toLowerCase())>=0||p.
 if(!fp.length)return;
 html+='<div style="font-size:0.46rem;color:#334155;text-transform:uppercase;letter-spacing:0.12em;margin:8px 0 5px 2px;font-family:JetBrains Mono,monospace;">— '+labels[state]+'</div>';
 fp.forEach(function(p){
-var m=mw(p);var b=bl(p);var c=wc(m);
+var m=mw(p);
+var c=wc(m);
 var icons=p.lanes.map(function(l){return'<span style="font-size:0.6rem;background:#0d1829;border:1px solid #1e3a5f;border-radius:4px;padding:0 4px;">'+l.icon+'</span>';}).join("");
+var usuariosCarril=p.lanes.reduce(function(sum,l){return sum+(tiemposReales[l.id]?1:0);},0);
 html+='<button class="pcard" onclick="selPort(\''+p.id+'\')">'
-+'<div style="width:3px;height:42px;border-radius:2px;background:'+c.dt+';flex-shrink:0;"></div>'
++'<div style="width:3px;height:42px;border-radius:2px;background:'+(m>0?c.dt:"#334155")+';flex-shrink:0;"></div>'
 +'<div style="flex:1;">'
 +'<div style="font-size:0.82rem;font-weight:700;color:#e2e8f0;">'+p.name+'</div>'
 +'<div style="font-size:0.56rem;color:#475569;margin-top:1px;">'+p.city+' · '+p.hours+'</div>'
 +'<div style="display:flex;gap:3px;margin-top:4px;flex-wrap:wrap;">'+icons+'</div>'
 +'</div>'
 +'<div style="text-align:right;flex-shrink:0;">'
-+'<div style="font-size:1.4rem;font-weight:800;color:'+c.tx+';font-family:JetBrains Mono,monospace;line-height:1;">'+fmt(m)+'</div>'
-+'<div style="font-size:0.5rem;color:#475569;">'+b.icon+' '+b.label+'</div>'
-+'<div style="font-size:0.44rem;color:#334155;">mas rapido</div>'
++'<div style="font-size:1.4rem;font-weight:800;color:'+(m>0?c.tx:"#334155")+';font-family:JetBrains Mono,monospace;line-height:1;">'+(m>0?fmt(m):"--")+'</div>'
++'<div style="font-size:0.44rem;color:#334155;">'+(m>0?"min · "+usuariosCarril+" datos":"Sin datos aun")+'</div>'
 +'</div>'
 +'<div style="color:#1e3a5f;font-size:0.7rem;">›</div>'
 +'</button>';
@@ -265,37 +375,27 @@ show("s-detail");
 }
 
 function renderDetail(){
-var p=port;var b=bl(p);var m=mw(p);var c=wc(m);
-var waurl=wa(p,b);
+var p=port;
 var waSVG='<svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>';
 
 document.getElementById("dhead").innerHTML=
 '<button class="back" onclick="show(\'s-ports\')">‹ Cambiar puerto</button>'
 +'<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:9px;">'
 +'<div>'
-+'<span style="font-size:0.5rem;background:#0a1628;border:1px solid #1e3a5f;border-radius:7px;padding:2px 7px;color:#64748b;font-family:JetBrains Mono,monospace;">'+(mode==="consult"?"🔍 Modo consulta":"📡 GPS en vivo")+'</span>'
++'<span style="font-size:0.5rem;background:#0a1628;border:1px solid #1e3a5f;border-radius:7px;padding:2px 7px;color:#64748b;font-family:JetBrains Mono,monospace;">'+(mode==="consult"?"🔍 Modo consulta":"📡 Compartiendo tiempo")+'</span>'
 +'<div style="font-size:1.05rem;font-weight:800;margin-top:3px;">'+p.name+'</div>'
 +'<div style="font-size:0.58rem;color:#475569;margin-top:2px;">📍 '+p.city+' · ⏰ '+p.hours+'</div>'
 +'</div>'
 +'<div style="display:flex;align-items:center;gap:4px;background:#0a1628;border-radius:11px;padding:4px 8px;border:1px solid #1a2744;">'
 +dot("#22c55e",7)
-+'<span style="font-size:0.5rem;color:#94a3b8;font-family:JetBrains Mono,monospace;">'+p.users+' GPS</span>'
++'<span style="font-size:0.5rem;color:#94a3b8;font-family:JetBrains Mono,monospace;">En vivo</span>'
 +'</div></div>'
-+'<div style="background:linear-gradient(135deg,'+c.bg+',#0a1628);border:1px solid '+c.br+';border-radius:11px;padding:10px 12px;">'
-+'<div style="font-size:0.44rem;color:#475569;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:5px;">✦ Recomendacion ahora mismo</div>'
-+'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:9px;">'
-+'<div><div style="font-size:0.88rem;font-weight:800;color:'+c.tx+';">'+b.icon+' '+b.label+'</div>'
-+'<div style="font-size:0.56rem;color:#475569;margin-top:2px;">'+b.desc+'</div></div>'
-+'<div style="text-align:right;"><div style="font-size:1.8rem;font-weight:800;color:'+c.tx+';font-family:JetBrains Mono,monospace;line-height:1;">'+fmt(b.wait)+'</div>'
-+'<div style="font-size:0.48rem;color:#334155;">min espera</div></div>'
-+'</div>'
-+'<a href="'+waurl+'" target="_blank" class="wabtn">'+waSVG+' Compartir por WhatsApp</a>'
++'<div style="background:#0a1628;border:1px solid #1e3a5f;border-radius:10px;padding:8px 11px;display:flex;align-items:center;gap:8px;">'
++'<span style="font-size:0.85rem;">🤝</span>'
++'<span style="font-size:0.6rem;color:#64748b;line-height:1.5;">Entre más personas comparten su tiempo de cruce, más precisa es la información para todos</span>'
 +'</div>';
 
-var html='<div style="margin:8px 0;background:#0a1628;border:1px solid #1e3a5f;border-radius:9px;padding:8px 11px;display:flex;align-items:flex-start;gap:7px;">'
-+'<span style="font-size:0.85rem;flex-shrink:0;">🕐</span>'
-+'<span style="font-size:0.62rem;color:#64748b;line-height:1.5;">'+tip()+'</span></div>';
-
+var html="";
 var groups=[{lb:"🚗 Vehiculos",tp:"car"},{lb:"🚶 Peatonal",tp:"ped"},{lb:"🚛 Comercial",tp:"truck"}];
 groups.forEach(function(g){
 var lanes=p.lanes.filter(function(l){return l.type===g.tp;});
@@ -304,38 +404,37 @@ html+='<div class="shead"><span style="font-size:0.72rem;">'+g.lb.split(" ")[0]+
 +'<span style="font-size:0.5rem;color:#334155;text-transform:uppercase;letter-spacing:0.12em;font-family:JetBrains Mono,monospace;">'+g.lb.split(" ").slice(1).join(" ")+'</span>'
 +'<div class="sline"></div></div>';
 lanes.forEach(function(ln){
-var lc=wc(ln.wait);
-var isBest=ln.id===b.id;
+var t=getLaneWait(ln.id);
+var lc=wc(t);
 var isExp=exp===ln.id;
-html+='<div class="lcard" style="background:'+(isExp?lc.bg:"#0a0f1c")+';border-color:'+(isExp?lc.br:isBest?lc.br+"66":"#1a2744")+';" onclick="togLane(\''+ln.id+'\')">'
-+(isBest?'<div class="bbadge" style="background:'+lc.dt+';">✦ MENOR ESPERA</div>':'')+
-'<div style="display:flex;align-items:center;gap:8px;">'
+html+='<div class="lcard" style="background:'+(isExp?lc.bg:"#0a0f1c")+';border-color:'+(isExp?lc.br:"#1a2744")+';" onclick="togLane(\''+ln.id+'\')">'
++'<div style="display:flex;align-items:center;gap:8px;">'
 +'<div style="width:34px;height:34px;border-radius:9px;background:'+lc.bg+';border:1px solid '+lc.br+';display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;">'+ln.icon+'</div>'
 +'<div style="flex:1;"><div style="font-size:0.78rem;font-weight:700;color:#e2e8f0;">'+ln.label+'</div><div style="font-size:0.56rem;color:#475569;margin-top:1px;">'+ln.desc+'</div></div>'
 +'<div style="text-align:right;flex-shrink:0;">'
-+'<div style="font-size:1.4rem;font-weight:800;color:'+lc.tx+';font-family:JetBrains Mono,monospace;line-height:1;">'+fmt(ln.wait)+'</div>'
-+'<div style="font-size:0.46rem;color:#334155;">min</div>'
-+'<div style="font-size:0.5rem;color:'+lc.tx+';">'+lc.lb+'</div>'
++'<div style="font-size:1.4rem;font-weight:800;color:'+(t>0?lc.tx:"#334155")+';font-family:JetBrains Mono,monospace;line-height:1;">'+(t>0?fmt(t):"--")+'</div>'
++'<div style="font-size:0.46rem;color:#334155;">'+(t>0?"min":"Sin datos")+'</div>'
++'<div style="font-size:0.5rem;color:'+(t>0?lc.tx:"#334155")+';">'+lc.lb+'</div>'
 +'</div>'
 +'<div style="font-size:0.6rem;color:#1e3a5f;margin-left:2px;">'+(isExp?"▲":"▼")+'</div>'
 +'</div>'
-+(isExp?'<div style="margin-top:10px;padding-top:10px;border-top:1px solid '+lc.br+'44;">'
-+'<div style="display:flex;justify-content:space-between;margin-bottom:4px;">'
-+'<span style="font-size:0.56rem;color:#475569;">Congestion</span>'
-+'<span style="font-size:0.56rem;color:'+lc.tx+';font-family:JetBrains Mono,monospace;">'+fmt(ln.wait)+' min</span></div>'
-+'<div class="pbar"><div class="pfill" style="width:'+Math.min(ln.wait/99*100,100)+'%;background:'+lc.dt+';"></div></div>'
-+'<div style="display:flex;gap:5px;margin-bottom:9px;"><span class="pill">📡 '+p.users+' usuarios</span><span class="pill">🕐 hace 30s</span></div>'
++(isExp?'<div style="margin-top:10px;padding-top:10px;border-top:1px solid '+(t>0?lc.br:"#1e293b")+'44;">'
++(t>0?'<div style="display:flex;justify-content:space-between;margin-bottom:4px;">'
++'<span style="font-size:0.56rem;color:#475569;">Tiempo promedio</span>'
++'<span style="font-size:0.56rem;color:'+lc.tx+';font-family:JetBrains Mono,monospace;">'+fmt(t)+' min</span></div>'
++'<div class="pbar"><div class="pfill" style="width:'+Math.min(t/99*100,100)+'%;background:'+lc.dt+';"></div></div>':
+'<div style="background:#0a1628;border:1px solid #1e293b;border-radius:8px;padding:8px;text-align:center;margin-bottom:10px;">'
++'<div style="font-size:0.65rem;color:#475569;">📡 Aun no hay datos de usuarios</div>'
++'<div style="font-size:0.58rem;color:#334155;margin-top:3px;">Se el primero en compartir tu tiempo de cruce</div>'
++'</div>')
++'<div style="display:flex;gap:5px;margin-bottom:9px;"><span class="pill">📡 Datos GPS reales</span><span class="pill">🔄 Actualiza cada 30s</span></div>'
 +'<div style="display:flex;gap:7px;">'
 +'<a href="'+wa(p,ln)+'" target="_blank" class="wabtn" style="flex:1;">'+waSVG+' WhatsApp</a>'
-+(mode==="gps"?'<button class="pri" style="flex:1;background:'+lc.dt+';" onclick="event.stopPropagation();startTrack(\''+ln.id+'\')">🛂 Activar GPS</button>':'')
-+'<button class="sec" onclick="event.stopPropagation();alert(\'Te avisaremos cuando baje el tiempo en '+ln.label+'\')">🔔</button>'
++(mode==="gps"?'<button class="pri" style="flex:1;background:#22c55e;" onclick="event.stopPropagation();startTrack(\''+ln.id+'\')">🛂 Iniciar cruce</button>':'')
 +'</div></div>':'')+
 '</div>';
 });
 });
-html+='<div style="background:#0a0f1c;border-radius:9px;padding:9px 11px;border:1px solid #1a2744;display:flex;justify-content:space-between;align-items:center;margin-top:12px;">'
-+'<span style="font-size:0.58rem;color:#334155;">📡 Datos en vivo · GPS anonimo</span>'
-+'<span style="font-size:0.54rem;color:#334155;font-family:JetBrains Mono,monospace;">hace 30s</span></div>';
 document.getElementById("dlanes").innerHTML=html;
 }
 
@@ -343,21 +442,33 @@ function togLane(id){exp=exp===id?null:id;renderDetail();}
 
 function startTrack(lid){
 lane=port.lanes.filter(function(l){return l.id===lid;})[0];
-elapsed=0;renderTracking();show("s-track");
+elapsed=0;
+startTime=Date.now();
+renderTracking();
+show("s-track");
 if(timer)clearInterval(timer);
-timer=setInterval(function(){elapsed++;updTime();},1000);
-if(navigator.geolocation){wid=navigator.geolocation.watchPosition(function(pos){updMove(pos.coords.speed||3);},function(){},{enableHighAccuracy:true,maximumAge:2000,timeout:10000});}
+timer=setInterval(function(){
+elapsed++;
+updTime();
+},1000);
+if(navigator.geolocation){
+wid=navigator.geolocation.watchPosition(
+function(pos){updMove(pos.coords.speed||1.5);},
+function(){},
+{enableHighAccuracy:true,maximumAge:2000,timeout:10000}
+);
+}
 }
 
 function renderTracking(){
-var p=port;var l=lane;var c=wc(l.wait);
+var p=port;var l=lane;
 document.getElementById("thead").innerHTML=
 '<div style="display:flex;justify-content:space-between;align-items:flex-start;">'
 +'<div>'
-+'<div style="font-size:0.46rem;color:#334155;text-transform:uppercase;margin-bottom:3px;">CRUZANDO AHORA</div>'
++'<div style="font-size:0.46rem;color:#334155;text-transform:uppercase;margin-bottom:3px;">COMPARTIENDO TIEMPO DE CRUCE</div>'
 +'<div style="font-size:1rem;font-weight:800;">'+p.name+'</div>'
 +'<div style="display:flex;align-items:center;gap:5px;margin-top:5px;">'
-+'<div style="background:'+c.bg+';border:1px solid '+c.br+';border-radius:6px;padding:2px 8px;font-size:0.58rem;font-weight:700;color:'+c.tx+';">'+l.icon+' '+l.label+'</div>'
++'<div style="background:#052e16;border:1px solid #16a34a;border-radius:6px;padding:2px 8px;font-size:0.58rem;font-weight:700;color:#4ade80;">'+l.icon+' '+l.label+'</div>'
 +dot("#f97316",7)
 +'<span id="mlabel" style="font-size:0.58rem;color:#f97316;">Detectando...</span>'
 +'</div></div>'
@@ -376,8 +487,8 @@ document.getElementById("tmap").innerHTML=
 +'<path d="M152 240 C168 210 182 186 192 168 S200 150 200 150" stroke="#38bdf8" stroke-width="3" fill="none" stroke-dasharray="6,3" stroke-linecap="round" opacity="0.7"/>'
 +'<circle cx="176" cy="156" r="4" fill="#60a5fa" opacity="0.5"/>'
 +'<circle cx="212" cy="141" r="4" fill="#60a5fa" opacity="0.5"/>'
-+'<circle cx="200" cy="90" r="12" fill="'+c.dt+'" opacity="0.15"/>'
-+'<circle cx="200" cy="90" r="6" fill="'+c.dt+'" opacity="0.9"/>'
++'<circle cx="200" cy="90" r="12" fill="#22c55e" opacity="0.15"/>'
++'<circle cx="200" cy="90" r="6" fill="#22c55e" opacity="0.9"/>'
 +'<text x="200" y="78" text-anchor="middle" fill="#475569" font-size="9" font-family="Georgia">Puerto</text>'
 +'<circle cx="200" cy="150" r="22" fill="#38bdf822"/>'
 +'<circle cx="200" cy="150" r="11" fill="#060b14" stroke="#38bdf8" stroke-width="2.5"/>'
@@ -389,34 +500,42 @@ document.getElementById("tmap").innerHTML=
 +'</div></div>'
 +'<div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(0deg,#060b14ff 58%,transparent);padding:22px 16px 12px;">'
 +'<div style="display:flex;justify-content:space-between;align-items:center;">'
-+'<div><div style="font-size:0.46rem;color:#334155;text-transform:uppercase;">Espera restante · '+l.label+'</div>'
-+'<div id="rtime" style="font-size:1.9rem;font-weight:800;color:'+c.tx+';font-family:JetBrains Mono,monospace;line-height:1.1;">~'+fmt(l.wait)+'<span style="font-size:0.75rem;color:#475569;"> min</span></div>'
++'<div>'
++'<div style="font-size:0.46rem;color:#334155;text-transform:uppercase;">Tu tiempo · '+l.label+'</div>'
++'<div id="etime2" style="font-size:1.9rem;font-weight:800;color:#38bdf8;font-family:JetBrains Mono,monospace;line-height:1.1;">00:00<span style="font-size:0.75rem;color:#475569;"> min</span></div>'
 +'</div>'
 +'<div style="text-align:right;">'
-+'<div style="font-size:0.46rem;color:#334155;">Señales GPS</div>'
-+'<div style="font-size:1.15rem;font-weight:700;color:#38bdf8;font-family:JetBrains Mono,monospace;">'+p.users+'</div>'
-+'<div style="font-size:0.46rem;color:#334155;">en este cruce</div>'
++'<div style="font-size:0.46rem;color:#334155;">Ayudando a</div>'
++'<div style="font-size:1.15rem;font-weight:700;color:#22c55e;font-family:JetBrains Mono,monospace;">todos</div>'
++'<div style="font-size:0.46rem;color:#334155;">los usuarios</div>'
 +'</div></div></div>';
 
 document.getElementById("tfoot").innerHTML=
-'<button onclick="stopTrack()" style="width:100%;padding:12px;background:#1a0505;border:1px solid #7f1d1d;border-radius:11px;color:#fca5a5;font-size:0.78rem;font-weight:700;cursor:pointer;">⏹ Terminar seguimiento</button>'
-+'<div style="text-align:center;margin-top:6px;font-size:0.46rem;color:#1e293b;">Tu ubicacion exacta nunca se almacena</div>';
+'<button onclick="stopTrack()" style="width:100%;padding:12px;background:#1a0505;border:1px solid #7f1d1d;border-radius:11px;color:#fca5a5;font-size:0.78rem;font-weight:700;cursor:pointer;">⏹ Termine de cruzar</button>'
++'<div style="text-align:center;margin-top:6px;font-size:0.46rem;color:#1e293b;">Tu ubicacion exacta nunca se almacena · Gracias por contribuir</div>';
 }
 
 function updTime(){
 var e=document.getElementById("etime");
-var r=document.getElementById("rtime");
-if(!e||!r)return;
-e.textContent=String(Math.floor(elapsed/60)).padStart(2,"0")+":"+String(elapsed%60).padStart(2,"0");
-var c=wc(lane.wait);
-r.innerHTML="~"+fmt(Math.max(1,lane.wait-Math.floor(elapsed/60)))+'<span style="font-size:0.75rem;color:#475569;"> min</span>';
+var e2=document.getElementById("etime2");
+if(!e)return;
+var mins=Math.floor(elapsed/60);
+var secs=elapsed%60;
+var str=String(mins).padStart(2,"0")+":"+String(secs).padStart(2,"0");
+e.textContent=str;
+if(e2)e2.innerHTML=String(mins).padStart(2,"0")+':'+String(secs).padStart(2,"0")+'<span style="font-size:0.75rem;color:#475569;"> min</span>';
 }
 
 function updMove(spd){
 var kmh=(spd*3.6).toFixed(1);
-var mv=spd<0.3?{ic:"⏸",lb:"Detenido",co:"#ef4444"}:spd<2.5?{ic:"🚶",lb:"Caminando",co:"#4ade80"}:spd<8?{ic:"🐢",lb:"Trafico lento",co:"#fb923c"}:{ic:"🚗",lb:"Avanzando",co:"#38bdf8"};
-var sp=document.getElementById("spill");var ml=document.getElementById("mlabel");
-var ui=document.getElementById("uicon");var st=document.getElementById("stext");
+var mv=spd<0.3?{ic:"⏸",lb:"Detenido",co:"#ef4444"}
+:spd<2.5?{ic:"🚶",lb:"Caminando",co:"#4ade80"}
+:spd<8?{ic:"🐢",lb:"Trafico lento",co:"#fb923c"}
+:{ic:"🚗",lb:"Avanzando",co:"#38bdf8"};
+var sp=document.getElementById("spill");
+var ml=document.getElementById("mlabel");
+var ui=document.getElementById("uicon");
+var st=document.getElementById("stext");
 if(sp)sp.style.borderColor=mv.co+"44";
 if(ml){ml.textContent=mv.lb;ml.style.color=mv.co;}
 if(ui)ui.textContent=mv.ic;
@@ -426,7 +545,15 @@ if(st){st.textContent=mv.ic+" "+mv.lb+" · "+kmh+" km/h";st.style.color=mv.co;}
 function stopTrack(){
 if(timer)clearInterval(timer);
 if(wid&&navigator.geolocation)navigator.geolocation.clearWatch(wid);
-elapsed=0;show("s-ports");
+var tiempoTotal=Math.round(elapsed/60);
+if(tiempoTotal>0&&port&&lane){
+guardarCruce(port.id,lane.id,tiempoTotal,1.5);
+alert("✅ Gracias por compartir tu tiempo de cruce!\n\nTu tiempo: "+tiempoTotal+" minutos\nEsto ayuda a todos los usuarios de "+port.name);
+}
+elapsed=0;
+show("s-ports");
+cargarTiempos();
+renderPorts();
 }
 
 renderPorts();
